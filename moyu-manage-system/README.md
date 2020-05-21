@@ -17,10 +17,10 @@ npm run build
 
 效果图
 
-![1590052257305](C:\Users\Duanmz\AppData\Roaming\Typora\typora-user-images\1590052257305.png)
+![image](https://github.com/sebuaa2020/Team201/blob/master/moyu-manage-system/image/p1.png)
 
-![1590052262152](C:\Users\Duanmz\AppData\Roaming\Typora\typora-user-images\1590052262152.png)
+![image](https://github.com/sebuaa2020/Team201/blob/master/moyu-manage-system/image/p2.png)
 
-![1590052267764](C:\Users\Duanmz\AppData\Roaming\Typora\typora-user-images\1590052267764.png)
+![image](https://github.com/sebuaa2020/Team201/blob/master/moyu-manage-system/image/p3.png)
 
-![1590052272194](C:\Users\Duanmz\AppData\Roaming\Typora\typora-user-images\1590052272194.png)
+![image](https://github.com/sebuaa2020/Team201/blob/master/moyu-manage-system/image/p4.png)
