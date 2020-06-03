@@ -4,10 +4,16 @@ import os
 import sys
 import rospy
 
+base_cmd = Twist()
+
 
 def main():
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'MoyuRobotServer.settings')
     rospy.init_node('commander', anonymous=True)
+    
+    base_cmd.linear.x = 0
+    base_cmd.linear.y = 0
+    base_cmd.angular.z = 0
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
