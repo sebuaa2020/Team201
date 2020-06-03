@@ -107,7 +107,7 @@ def move_ctrl(request: WSGIRequest):
         if base_cmd.linear.y < -linear_vel*k_vel:
             base_cmd.linear.y = -linear_vel*k_vel
         cmd_vel_pub.publish(base_cmd)
-    elif(command=='stop'):
+    elif command=='stop':
         base_cmd.linear.x = 0
         base_cmd.linear.y = 0
         base_cmd.angular.z = 0
@@ -128,10 +128,16 @@ def move_ctrl(request: WSGIRequest):
     return HttpResponse(response)
 
 def hector_mapping(request: WSGIRequest):
-    pass
+    os.system("gnome-terminal -e 'bash -c \"roslaunch wpb_home_tutorials hector_mapping.launch; exec bash\"'")
+    response = {
+            'message': 'Succeed!',
+            'success': True
+    }
+    response = json.dumps(response)
+    return HttpResponse(response)
 
 def voice_reg(request: WSGIRequest):
-    os.system('bash /home/nemo/ros/Team201_catkin_ws/run.bash')
+    os.system("gnome-terminal -e 'bash -c \"roslaunch xfyun_waterplus voice_cmd_wpb_home.launch; exec bash\"'")
     response = {
             'message': 'Succeed!',
             'success': True
