@@ -16,7 +16,6 @@ def deliver(request: WSGIRequest):
     try:
         room = Room.objects.get(roomNo=room_id)
 
-        rospy.init_node('deliver', anonymous=True)
         move_base = actionlib.SimpleActionClient("move_base", MoveBaseAction)
         move_base.wait_for_server()
         goal = MoveBaseGoal()  
