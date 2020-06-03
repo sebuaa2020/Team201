@@ -2,6 +2,8 @@ from django.db import models
 
 class Room(models.Model):
     roomNo = models.CharField(max_length=50, primary_key=True)
+    roomIdx_x = models.FloatField()
+    roomIdx_y = models.FloatField()
 
 class Robot(models.Model):
     robotNo = models.CharField(max_length=50, primary_key=True)
