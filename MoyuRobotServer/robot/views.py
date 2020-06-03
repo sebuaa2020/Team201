@@ -75,5 +75,13 @@ def deliver(request: WSGIRequest):
         response = json.dumps(response)
         return HttpResponse(response)
 
+def move_ctrl(request: WSGIRequest):
+    paras = request.GET
+    command = paras['command']
+    pass
+
+def hector_mapping(request: WSGIRequest):
+    pass
+
 def fetch_item(request: WSGIRequest):
     pass
