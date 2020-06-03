@@ -145,7 +145,8 @@ export default {
     },
     methods: {
         onSubmit() {
-            this.$message.success('提交成功！');
+            this.form.region
+            this.$message.success(this.form.region+'提交成功！');
         }
     }
 };
