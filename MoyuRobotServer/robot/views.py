@@ -9,10 +9,10 @@ from .models import Room
 
 def navigate(request: WSGIRequest):
     paras = request.GET
-    source_x = paras['source_x']
-    source_y = paras['source_y']
-    target_x = paras['target_x']
-    target_y = paras['target_y']
+    source_x = float(paras['source_x'])
+    source_y = float(paras['source_y'])
+    target_x = float(paras['target_x'])
+    target_y = float(paras['target_y'])
     move_base = actionlib.SimpleActionClient("move_base", MoveBaseAction)
     move_base.wait_for_server()
     goal = MoveBaseGoal()  
