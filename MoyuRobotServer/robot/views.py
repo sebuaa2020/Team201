@@ -1,4 +1,5 @@
 import json
+import os
 import rospy
 import actionlib
 from geometry_msgs.msg import Twist
@@ -128,6 +129,15 @@ def move_ctrl(request: WSGIRequest):
 
 def hector_mapping(request: WSGIRequest):
     pass
+
+def voice_reg(request: WSGIRequest):
+    os.system('bash /home/nemo/ros/Team201_catkin_ws/run.bash')
+    response = {
+            'message': 'Succeed!',
+            'success': True
+    }
+    response = json.dumps(response)
+    return HttpResponse(response)
 
 def fetch_item(request: WSGIRequest):
     pass

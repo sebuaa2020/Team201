@@ -6,5 +6,6 @@ urlpatterns = [
     path('fetch_item/', views.fetch_item, name='fetch_item'),
     path('deliver/', views.deliver, name='deliever'),
     path('move_ctrl/', views.move_ctrl, name='move_ctrl'),
-    path('hector_mapping/', views.hector_mapping, name='move_ctrl')
+    path('hector_mapping/', views.hector_mapping, name='move_ctrl'),
+    path('voice_reg/', views.voice_reg, name='voice_reg')
 ]
