@@ -7,7 +7,7 @@ from django.shortcuts import render, HttpResponse, get_object_or_404
 from django.core.handlers.wsgi import WSGIRequest
 
 from .models import Room
-from ..manage import base_cmd
+from manage import base_cmd
 
 def navigate(request: WSGIRequest):
     paras = request.GET
