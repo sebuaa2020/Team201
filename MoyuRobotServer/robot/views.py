@@ -1,6 +1,7 @@
 import json
 import rospy
 import actionlib
+from geometry_msgs.msg import Twist
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
 from django.shortcuts import render, HttpResponse, get_object_or_404
 from django.core.handlers.wsgi import WSGIRequest
@@ -78,7 +79,57 @@ def deliver(request: WSGIRequest):
 def move_ctrl(request: WSGIRequest):
     paras = request.GET
     command = paras['command']
-    pass
+
+    linear_vel = 0.1
+    k_vel = 3
+
+    cmd_vel_pub = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
+
+    base_cmd = Twist()
+    base_cmd.linear.x = 0;
+    base_cmd.linear.y = 0;
+    base_cmd.angular.z = 0;
+
+
+    if command=='forward':
+        base_cmd.linear.x += linear_vel
+        if base_cmd.linear.x > linear_vel*k_vel:
+            base_cmd.linear.x = linear_vel*k_vel
+        cmd_vel_pub.publish(base_cmd)
+    elif command=='backward':
+        base_cmd.linear.x += -linear_vel
+        if base_cmd.linear.x < -linear_vel*k_vel:
+            base_cmd.linear.x = -linear_vel*k_vel
+        cmd_vel_pub.publish(base_cmd)
+    elif command=='left':
+        base_cmd.linear.y += linear_vel
+        if base_cmd.linear.y > linear_vel*k_vel:
+            base_cmd.linear.y = linear_vel*k_vel
+        cmd_vel_pub.publish(base_cmd)
+    elif command=='right':
+        base_cmd.linear.y += -linear_vel
+        if base_cmd.linear.y < -linear_vel*k_vel:
+            base_cmd.linear.y = -linear_vel*k_vel
+        cmd_vel_pub.publish(base_cmd)
+    elif(command=='stop'):
+        base_cmd.linear.x = 0
+        base_cmd.linear.y = 0
+        base_cmd.angular.z = 0
+        cmd_vel_pub.publish(base_cmd)
+    else:
+        response = {
+            'message': 'Command invalid!',
+            'success': False
+        }
+        response = json.dumps(response)
+        return HttpResponse(response)
+
+    response = {
+            'message': 'Succeed!',
+            'success': True
+    }
+    response = json.dumps(response)
+    return HttpResponse(response)
 
 def hector_mapping(request: WSGIRequest):
     pass
