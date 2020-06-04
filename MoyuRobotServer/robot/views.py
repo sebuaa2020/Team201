@@ -17,36 +17,7 @@ pub = rospy.Publisher('/robotsound', SoundRequest, queue_size=20)
 
 
 def navigate(request: WSGIRequest):
-    paras = request.GET
-    source_x = float(paras['source_x'])
-    source_y = float(paras['source_y'])
-    target_x = float(paras['target_x'])
-    target_y = float(paras['target_y'])
-    move_base = actionlib.SimpleActionClient("move_base", MoveBaseAction)
-    move_base.wait_for_server()
-    goal = MoveBaseGoal()  
-    goal.target_pose.header.frame_id = "map"
-    goal.target_pose.header.stamp = rospy.Time.now()
-    goal.target_pose.pose.position.x = source_x
-    goal.target_pose.pose.position.y = source_y
-    goal.target_pose.pose.orientation.w = 1.0
-    move_base.send_goal(goal)
-    wait = move_base.wait_for_result(rospy.Duration(120))
-    if not wait:
-        response = {
-            'message': 'Failed!',
-            'success': False
-        }
-        response = json.dumps(response)
-        return HttpResponse(response)
-
-    goal = MoveBaseGoal()  
-    goal.target_pose.header.frame_id = "map"
-    goal.target_pose.header.stamp = rospy.Time.now()
-    goal.target_pose.pose.position.x = target_x
-    goal.target_pose.pose.position.y = target_y
-    goal.target_pose.pose.orientation.w = 1.0
-    move_base.send_goal(goal)
+    nav_thread = threading.Thread(target=run_navigate, args=[request])
     response = {
         'message': 'Succeed!',
         'success': True
@@ -147,6 +118,31 @@ def voice_reg(request: WSGIRequest):
 
 def fetch_item(request: WSGIRequest):
     pass
+
+def run_navigate(request: WSGIRequest):
+    paras = request.GET
+    source_x = float(paras['source_x'])
+    source_y = float(paras['source_y'])
+    target_x = float(paras['target_x'])
+    target_y = float(paras['target_y'])
+    move_base = actionlib.SimpleActionClient("move_base", MoveBaseAction)
+    move_base.wait_for_server()
+    goal = MoveBaseGoal()  
+    goal.target_pose.header.frame_id = "map"
+    goal.target_pose.header.stamp = rospy.Time.now()
+    goal.target_pose.pose.position.x = source_x
+    goal.target_pose.pose.position.y = source_y
+    goal.target_pose.pose.orientation.w = 1.0
+    move_base.send_goal(goal)
+    wait = move_base.wait_for_result()
+
+    goal = MoveBaseGoal()  
+    goal.target_pose.header.frame_id = "map"
+    goal.target_pose.header.stamp = rospy.Time.now()
+    goal.target_pose.pose.position.x = target_x
+    goal.target_pose.pose.position.y = target_y
+    goal.target_pose.pose.orientation.w = 1.0
+    move_base.send_goal(goal)
 
 def run_deliver(room: Room):
     move_base = actionlib.SimpleActionClient("move_base", MoveBaseAction)
