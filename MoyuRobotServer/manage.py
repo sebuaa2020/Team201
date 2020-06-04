@@ -6,6 +6,7 @@ import rospy
 from geometry_msgs.msg import Twist
 
 base_cmd = Twist()
+cmd_vel_pub = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
 
 
 def main():
@@ -15,6 +16,7 @@ def main():
     base_cmd.linear.x = 0
     base_cmd.linear.y = 0
     base_cmd.angular.z = 0
+    cmd_vel_pub.publish(base_cmd)
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:

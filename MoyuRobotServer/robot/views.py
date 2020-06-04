@@ -8,7 +8,7 @@ from django.shortcuts import render, HttpResponse, get_object_or_404
 from django.core.handlers.wsgi import WSGIRequest
 
 from .models import Room
-from manage import base_cmd
+from manage import base_cmd, cmd_vel_pub
 
 def navigate(request: WSGIRequest):
     paras = request.GET
@@ -84,8 +84,7 @@ def move_ctrl(request: WSGIRequest):
 
     linear_vel = 0.1
     k_vel = 3
-
-    cmd_vel_pub = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
+    
 
     if command=='forward':
         base_cmd.linear.x += linear_vel
