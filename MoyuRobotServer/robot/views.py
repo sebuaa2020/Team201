@@ -18,6 +18,7 @@ pub = rospy.Publisher('/robotsound', SoundRequest, queue_size=20)
 
 def navigate(request: WSGIRequest):
     nav_thread = threading.Thread(target=run_navigate, args=[request])
+    nav_thread.start()
     response = {
         'message': 'Succeed!',
         'success': True
@@ -134,7 +135,7 @@ def run_navigate(request: WSGIRequest):
     goal.target_pose.pose.position.y = source_y
     goal.target_pose.pose.orientation.w = 1.0
     move_base.send_goal(goal)
-    wait = move_base.wait_for_result()
+    wait = move_base.wait_for_result(rospy.Duration(120))
 
     goal = MoveBaseGoal()  
     goal.target_pose.header.frame_id = "map"
