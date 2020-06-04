@@ -15,9 +15,8 @@
                         <el-input v-model="form.name"></el-input>
                     </el-form-item>
                     <el-form-item label="任务类型">
-                        <el-select v-model="form.region" placeholder="请选择">
+                        <el-select v-model="form.task" placeholder="请选择">
                             <el-option key="direct" label="导航" value="direct"></el-option>
-                            <el-option key="get" label="取物" value="get"></el-option>
                             <el-option key="send" label="送物" value="send"></el-option>
                             <el-option key="cruise" label="巡航" value="cruise"></el-option>
                         </el-select>
@@ -42,16 +41,23 @@
                         </el-col>
                     </el-form-item>
                     <el-form-item label="起始地x坐标">
-                        <el-input v-model="form.startx"></el-input>
+                        <el-input v-model="form.start_x"></el-input>
                     </el-form-item>
                     <el-form-item label="起始地y坐标">
-                        <el-input v-model="form.starty"></el-input>
+                        <el-input v-model="form.start_y"></el-input>
                     </el-form-item>
                     <el-form-item label="目的地x坐标">
-                        <el-input v-model="form.endx"></el-input>
+                        <el-input v-model="form.end_x"></el-input>
                     </el-form-item>
                     <el-form-item label="目的地y坐标">
-                        <el-input v-model="form.endy" ></el-input>
+                        <el-input v-model="form.end_y" ></el-input>
+                    </el-form-item>
+                    <el-form-item label="目的房间号(送物功能用)">
+                        <el-checkbox-group v-model="form.type">
+                            <el-checkbox label="101" name="type"></el-checkbox>
+                            <el-checkbox label="102" name="type"></el-checkbox>
+                            <el-checkbox label="103" name="type"></el-checkbox>
+                        </el-checkbox-group>
                     </el-form-item>
                     <el-form-item label="执行命令">
                         <el-input type="textarea" rows="5" v-model="form.desc"></el-input>
@@ -71,66 +77,16 @@ export default {
     name: 'baseform',
     data() {
         return {
-            options: [
-                {
-                    value: 'guangdong',
-                    label: '广东省',
-                    children: [
-                        {
-                            value: 'guangzhou',
-                            label: '广州市',
-                            children: [
-                                {
-                                    value: 'tianhe',
-                                    label: '天河区'
-                                },
-                                {
-                                    value: 'haizhu',
-                                    label: '海珠区'
-                                }
-                            ]
-                        },
-                        {
-                            value: 'dongguan',
-                            label: '东莞市',
-                            children: [
-                                {
-                                    value: 'changan',
-                                    label: '长安镇'
-                                },
-                                {
-                                    value: 'humen',
-                                    label: '虎门镇'
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    value: 'hunan',
-                    label: '湖南省',
-                    children: [
-                        {
-                            value: 'changsha',
-                            label: '长沙市',
-                            children: [
-                                {
-                                    value: 'yuelu',
-                                    label: '岳麓区'
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ],
             form: {
                 name: '',
-                region: '',
+                task: '',
                 date1: '',
                 date2: '',
-                delivery: true,
-                type: ['步步高'],
-                resource: '小天才',
+                start_x:'',
+                start_y:'',
+                end_x:'',
+                end_y:'',
+                type: [101,102,103],
                 desc: '',
                 options: []
             }
