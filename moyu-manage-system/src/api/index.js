@@ -23,3 +23,27 @@ export const navigate = (source_x, source_y, target_x, target_y) => {
         params: {'source_x': source_x, 'source_y': source_y, 'target_x':target_x, 'target_y': target_y}
     })
 }
+
+export const move_ctrl = command =>{
+    return request({
+        url: '/robot/move_ctrl/',
+        method: 'get',
+        params: {'command': command}
+    })
+}
+
+export const voice_reg = () =>{
+    return request({
+        url: '/robot/voice_reg/',
+        method: 'get',
+        params:{}
+    })
+}
+
+export const hector_mapping = () =>{
+    return request({
+        url: '/robot/hector_mapping/',
+        method: 'get',
+        params:{}
+    })
+}

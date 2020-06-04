@@ -22,7 +22,7 @@ export default new Router({
                 {
                     path: '/table',
                     component: () => import(/* webpackChunkName: "table" */ '../components/page/BaseTable.vue'),
-                    meta: { title: '注册账号信息' }
+                    meta: { title: '住户信息' }
                 },
                 {
                     path: '/tabs',
@@ -32,13 +32,7 @@ export default new Router({
                 {
                     path: '/form',
                     component: () => import(/* webpackChunkName: "form" */ '../components/page/BaseForm.vue'),
-                    meta: { title: '住户信息' }
-                },
-                {
-                    // 拖拽列表组件
-                    path: '/drag',
-                    component: () => import(/* webpackChunkName: "drag" */ '../components/page/DragList.vue'),
-                    meta: { title: '拖拽列表' }
+                    meta: { title: '机器人控制模块' }
                 },
                 {
                     // 团队信息介绍
