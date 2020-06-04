@@ -73,9 +73,25 @@ export default {
                     title: '功能',
                     subs: [
                         {
-                            index: 'form',
-                            title: '基础功能'
+                            index: 'form_1',
+                            title: '导航功能'
                         },
+                        {
+                            index: 'form_2',
+                            title: '送物功能'
+                        }, 
+                        {
+                            index: 'form_3',
+                            title: '人工控制'
+                        }, 
+                        {
+                            index: 'form_4',
+                            title: '建图功能'
+                        }, 
+                        {
+                            index: 'form_5',
+                            title: '语音识别'
+                        }
                     ]
                 },
                 {

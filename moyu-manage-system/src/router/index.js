@@ -30,9 +30,29 @@ export default new Router({
                     meta: { title: '系统信息' }
                 },
                 {
-                    path: '/form',
-                    component: () => import(/* webpackChunkName: "form" */ '../components/page/BaseForm.vue'),
-                    meta: { title: '机器人控制模块' }
+                    path: '/form_1',
+                    component: () => import(/* webpackChunkName: "form" */ '../components/page/NavigationForm.vue'),
+                    meta: { title: '导航功能' }
+                },
+                {
+                    path: '/form_2',
+                    component: () => import(/* webpackChunkName: "form" */ '../components/page/DeliverForm.vue'),
+                    meta: { title: '送物功能' }
+                },
+                {
+                    path: '/form_3',
+                    component: () => import(/* webpackChunkName: "form" */ '../components/page/MoveCtrlForm.vue'),
+                    meta: { title: '人工控制' }
+                },
+                {
+                    path: '/form_4',
+                    component: () => import(/* webpackChunkName: "form" */ '../components/page/MappingForm.vue'),
+                    meta: { title: '建图功能' }
+                },
+                {
+                    path: '/form_5',
+                    component: () => import(/* webpackChunkName: "form" */ '../components/page/VoiceRegForm.vue'),
+                    meta: { title: '语音识别' }
                 },
                 {
                     // 团队信息介绍
