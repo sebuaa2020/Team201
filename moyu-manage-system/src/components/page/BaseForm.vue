@@ -5,20 +5,21 @@
                 <el-breadcrumb-item>
                     <i class="el-icon-lx-calendar"></i> 表单
                 </el-breadcrumb-item>
-                <el-breadcrumb-item>基本表单</el-breadcrumb-item>
+                <el-breadcrumb-item>任务表单</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="container">
             <div class="form-box">
-                <el-form ref="form" :model="form" label-width="80px">
-                    <el-form-item label="表单名称">
+                <el-form ref="form" :model="form" label-width="100px">
+                    <el-form-item label="任务发起者">
                         <el-input v-model="form.name"></el-input>
                     </el-form-item>
-                    <el-form-item label="选择器">
+                    <el-form-item label="任务类型">
                         <el-select v-model="form.region" placeholder="请选择">
-                            <el-option key="bbk" label="步步高" value="bbk"></el-option>
-                            <el-option key="xtc" label="小天才" value="xtc"></el-option>
-                            <el-option key="imoo" label="imoo" value="imoo"></el-option>
+                            <el-option key="direct" label="导航" value="direct"></el-option>
+                            <el-option key="get" label="取物" value="get"></el-option>
+                            <el-option key="send" label="送物" value="send"></el-option>
+                            <el-option key="cruise" label="巡航" value="cruise"></el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item label="日期时间">
@@ -40,27 +41,19 @@
                             ></el-time-picker>
                         </el-col>
                     </el-form-item>
-                    <el-form-item label="城市级联">
-                        <el-cascader :options="options" v-model="form.options"></el-cascader>
+                    <el-form-item label="起始地x坐标">
+                        <el-input v-model="form.startx"></el-input>
                     </el-form-item>
-                    <el-form-item label="选择开关">
-                        <el-switch v-model="form.delivery"></el-switch>
+                    <el-form-item label="起始地y坐标">
+                        <el-input v-model="form.starty"></el-input>
                     </el-form-item>
-                    <el-form-item label="多选框">
-                        <el-checkbox-group v-model="form.type">
-                            <el-checkbox label="步步高" name="type"></el-checkbox>
-                            <el-checkbox label="小天才" name="type"></el-checkbox>
-                            <el-checkbox label="imoo" name="type"></el-checkbox>
-                        </el-checkbox-group>
+                    <el-form-item label="目的地x坐标">
+                        <el-input v-model="form.endx"></el-input>
                     </el-form-item>
-                    <el-form-item label="单选框">
-                        <el-radio-group v-model="form.resource">
-                            <el-radio label="步步高"></el-radio>
-                            <el-radio label="小天才"></el-radio>
-                            <el-radio label="imoo"></el-radio>
-                        </el-radio-group>
+                    <el-form-item label="目的地y坐标">
+                        <el-input v-model="form.endy" ></el-input>
                     </el-form-item>
-                    <el-form-item label="文本框">
+                    <el-form-item label="执行命令">
                         <el-input type="textarea" rows="5" v-model="form.desc"></el-input>
                     </el-form-item>
                     <el-form-item>
