@@ -86,7 +86,7 @@ export default {
                 start_y:'',
                 end_x:'',
                 end_y:'',
-                type: [101,102,103],
+                type: [],
                 desc: '',
                 options: []
             }
@@ -95,7 +95,7 @@ export default {
     methods: {
         onSubmit() {
             this.form.region
-            this.$message.success(this.form.region+'提交成功！');
+            this.$message.success(this.form.name+this.form.type+'提交成功！');
         }
     }
 };

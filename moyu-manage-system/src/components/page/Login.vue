@@ -44,12 +44,13 @@ export default {
     methods: {
         submitForm() {
             this.$refs.login.validate(valid => {
-                if (valid) {
+                if (this.param.username == "admin" && this.param.password=="123123") {
+                    //this.$message.success(this.param.username + this.param.password+"1");
                     this.$message.success('登录成功');
                     localStorage.setItem('ms_username', this.param.username);
                     this.$router.push('/');
                 } else {
-                    this.$message.error('请输入账号和密码');
+                    this.$message.error('登录错误，请重新输入用户名和密码');
                     console.log('error submit!!');
                     return false;
                 }
