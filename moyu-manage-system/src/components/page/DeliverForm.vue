@@ -73,7 +73,7 @@ export default {
                     this.$message.success('提交成功！');
                 }
                 else{
-                    this.$message.success('抱歉，您的送货请求不符合规范');
+                    this.$message.error('抱歉，您的送货请求不符合规范');
                 }
             });
         },
