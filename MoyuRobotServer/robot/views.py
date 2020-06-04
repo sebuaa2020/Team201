@@ -1,7 +1,9 @@
 import json
 import os
+import threading
 import rospy
 import actionlib
+from sound_play.msg import SoundRequest
 from geometry_msgs.msg import Twist
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
 from django.shortcuts import render, HttpResponse, get_object_or_404
@@ -54,15 +56,8 @@ def deliver(request: WSGIRequest):
     try:
         room = Room.objects.get(roomNo=room_id)
 
-        move_base = actionlib.SimpleActionClient("move_base", MoveBaseAction)
-        move_base.wait_for_server()
-        goal = MoveBaseGoal()  
-        goal.target_pose.header.frame_id = "map"
-        goal.target_pose.header.stamp = rospy.Time.now()
-        goal.target_pose.pose.position.x = room.roomIdx_x
-        goal.target_pose.pose.position.y = room.roomIdx_y
-        goal.target_pose.pose.orientation.w = 1.0
-        move_base.send_goal(goal)
+        deliver_thread = threading.Thread(target=run_deliver, args=[room])
+        deliver_thread.start()
         
         response = {
             'message': 'Succeed!',
@@ -146,3 +141,24 @@ def voice_reg(request: WSGIRequest):
 
 def fetch_item(request: WSGIRequest):
     pass
+
+def run_deliver(room: Room):
+    move_base = actionlib.SimpleActionClient("move_base", MoveBaseAction)
+    move_base.wait_for_server()
+    goal = MoveBaseGoal()  
+    goal.target_pose.header.frame_id = "map"
+    goal.target_pose.header.stamp = rospy.Time.now()
+    goal.target_pose.pose.position.x = room.roomIdx_x
+    goal.target_pose.pose.position.y = room.roomIdx_y
+    goal.target_pose.pose.orientation.w = 1.0
+    move_base.send_goal(goal)
+    result = move_base.wait_for_result()
+    
+    if result:
+        pub = rospy.Publisher('/robotsound', SoundRequest, queue_size=20)
+        sp = SoundRequest()
+        sp.sound = SoundRequest.SAY
+        sp.command = SoundRequest.PLAY_ONCE
+        sp.volume = 1.0
+        sp.arg = 'Hello, custom of room {:s}, there\'s a package for you.'.format(room.roomNo)
+        pub.publish(sp)
