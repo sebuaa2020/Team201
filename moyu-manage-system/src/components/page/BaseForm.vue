@@ -18,7 +18,9 @@
                         <el-select v-model="form.task" placeholder="请选择">
                             <el-option key="direct" label="导航" value="direct"></el-option>
                             <el-option key="send" label="送物" value="send"></el-option>
-                            <el-option key="cruise" label="巡航" value="cruise"></el-option>
+                            <el-option key="mov_ctrl" label="人工控制" value="mov_ctrl"></el-option>
+                            <el-option key="video_reg" label="语音识别" value="video_reg"></el-option>
+                            <el-option key="hector_mapping" label="建图" value="hector_mapping"></el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item label="日期时间">
@@ -52,12 +54,21 @@
                     <el-form-item label="目的地y坐标">
                         <el-input v-model="form.end_y" ></el-input>
                     </el-form-item>
-                    <el-form-item label="目的房间号(送物功能用)">
-                        <el-checkbox-group v-model="form.type">
-                            <el-checkbox label="101" name="type"></el-checkbox>
-                            <el-checkbox label="102" name="type"></el-checkbox>
-                            <el-checkbox label="103" name="type"></el-checkbox>
-                        </el-checkbox-group>
+                    <el-form-item label="目的房间号">
+                        <el-radio-group v-model="form.type">
+                            <el-radio label="101" name="type"></el-radio>
+                            <el-radio label="102" name="type"></el-radio>
+                            <el-radio label="103" name="type"></el-radio>
+                        </el-radio-group>
+                    </el-form-item>
+                     <el-form-item label="人工操作选择">
+                        <el-radio-group v-model="form.type1">
+                            <el-radio label="forward" name="type1"></el-radio>
+                            <el-radio label="backward" name="type1"></el-radio>
+                            <el-radio label="left" name="type1"></el-radio>
+                            <el-radio label="right" name="type1"></el-radio>
+                            <el-radio label="stop" name="type1"></el-radio>
+                        </el-radio-group>
                     </el-form-item>
                     <el-form-item label="执行命令">
                         <el-input type="textarea" rows="5" v-model="form.desc"></el-input>
@@ -73,6 +84,8 @@
 </template>
 
 <script>
+import {fetchData,deliver,navigate,move_ctrl,voice_reg,hector_mapping } from '../../api/index';
+import request from '../../utils/request';
 export default {
     name: 'baseform',
     data() {
@@ -87,16 +100,140 @@ export default {
                 end_x:'',
                 end_y:'',
                 type: [],
+<<<<<<< HEAD
+=======
+                type1:[],
+>>>>>>> dd8c47ae8b02de065032f66bbf6af1829c0ee2c3
                 desc: '',
                 options: []
             }
         };
     },
     methods: {
+        fetchData_request(query){
+            deliver(query).then(res => {
+                if (res.success){   
+                    this.$message.success('提交成功！');
+                }
+                else{
+                    this.$message.success('抱歉，您的取物请求不符合规范');
+                }
+            });
+        },
+        deliver_request(room_id) {
+            deliver(room_id).then(res => {
+               if (res.success){   
+                    this.$message.success('提交成功！');
+                }
+                else{
+                    this.$message.success('抱歉，您的送货请求不符合规范');
+                }
+            });
+        },
+        navigate_request(source_x, source_y, target_x, target_y){
+            navigate(source_x, source_y, target_x, target_y).then(res =>{
+               if (res.success){   
+                    this.$message.success('提交成功！');
+                }
+                else{
+                    this.$message.success('抱歉，您的巡航请求不符合规范');
+                }
+            })
+        },
+        move_ctrl_request(command){
+            move_ctrl(command).then(res=>{
+                if (res.success){   
+                    this.$message.success('正在执行！');
+                }
+                else{
+                    this.$message.success('抱歉，您的人工操作请求不符合规范');
+                }
+            })
+        },
+        voice_reg_request(){
+            voice_reg().then(res=>{
+                if (res.success){   
+                    this.$message.success('正在执行！');
+                }
+                else{
+                    this.$message.success('抱歉，我没听清，请再说一次');
+                }
+            })
+        },
+        hector_mapping_request(){
+            hector_mapping().then(res=>{
+                if (res.success){   
+                    this.$message.success('正在执行！');
+                }
+                else{
+                    this.$message.success('建图失败！请再尝试一次');
+                }
+            })
+        },
         onSubmit() {
+<<<<<<< HEAD
             this.form.region
             this.$message.success(this.form.name+this.form.type+'提交成功！');
         }
+=======
+            if(this.form.task == "direct"){
+                this.navigate_request(Number(this.form.start_x),Number(this.form.start_y),Number(this.form.end_x),Number(this.form.end_y))
+            }
+            else if(this.form.task == "send"){
+                if(isNaN(Number(this.form.type))){
+                    window.alert("抱歉，您的操作有误")
+                    return;
+                }
+                this.deliver_request(Number(this.form.type))
+            }
+            else if(this.form.task == "mov_ctrl"){
+                this.move_ctrl_request(this.form.type1)
+            }
+            else if(this.form.task == "video_reg"){
+                this.voice_reg_request()
+            }
+            else if(this.form.task == "hector_mapping"){
+                this.hector_mapping_request()
+            }
+            else{
+                window.alert("指令错误")
+            }
+            
+            //this.navigate_my(1,1,1,1)
+            //var ans1 = this.navigate_my()
+            //window.alert(ans1.url)
+            //var test_ans = this.test()
+            //if(test_ans.test_1){
+            //    window.alert(test_ans.test_2)
+            //}
+        },
+        navigate_my:function(source_x,source_y,target_x,target_y){
+            window.alert("im in")
+            return request({
+                    url: '/robot/navigate/',
+                    method: 'get',
+                    params: {'source_x': source_x, 'source_y': source_y, 'target_x':target_x, 'target_y': target_y}
+            }) 
+        },
+        test:function(){
+            window.alert("im in test")
+            return this.test1(true)
+        },
+        test1:function(test1){
+            window.alert("im in test1")
+            if(test1 === true){
+                window.alert("true")
+            }
+            else{
+                window.alert("false")
+            }
+            return {
+                test_1: true,
+                test_2:"nice"
+            }
+        },
+
+>>>>>>> dd8c47ae8b02de065032f66bbf6af1829c0ee2c3
     }
 };
 </script>
