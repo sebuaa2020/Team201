@@ -12,6 +12,10 @@ from django.core.handlers.wsgi import WSGIRequest
 from .models import Room
 from manage import base_cmd, cmd_vel_pub
 
+lock = threading.Lock()
+pub = rospy.Publisher('/robotsound', SoundRequest, queue_size=20)
+
+
 def navigate(request: WSGIRequest):
     paras = request.GET
     source_x = float(paras['source_x'])
@@ -80,7 +84,7 @@ def move_ctrl(request: WSGIRequest):
     linear_vel = 0.1
     k_vel = 3
     
-
+    lock.acquire()
     if command=='forward':
         base_cmd.linear.x += linear_vel
         if base_cmd.linear.x > linear_vel*k_vel:
@@ -107,6 +111,7 @@ def move_ctrl(request: WSGIRequest):
         base_cmd.angular.z = 0
         cmd_vel_pub.publish(base_cmd)
     else:
+        lock.release()
         response = {
             'message': 'Command invalid!',
             'success': False
@@ -114,6 +119,7 @@ def move_ctrl(request: WSGIRequest):
         response = json.dumps(response)
         return HttpResponse(response)
 
+    lock.release()
     response = {
             'message': 'Succeed!',
             'success': True
@@ -152,13 +158,13 @@ def run_deliver(room: Room):
     goal.target_pose.pose.position.y = room.roomIdx_y
     goal.target_pose.pose.orientation.w = 1.0
     move_base.send_goal(goal)
-    result = move_base.wait_for_result()
+    move_base.wait_for_result()
+  
     
-    if result:
-        pub = rospy.Publisher('/robotsound', SoundRequest, queue_size=20)
-        sp = SoundRequest()
-        sp.sound = SoundRequest.SAY
-        sp.command = SoundRequest.PLAY_ONCE
-        sp.volume = 1.0
-        sp.arg = 'Hello, custom of room {:s}, there\'s a package for you.'.format(room.roomNo)
-        pub.publish(sp)
+    
+    sp = SoundRequest()
+    sp.sound = SoundRequest.SAY
+    sp.command = SoundRequest.PLAY_ONCE
+    sp.volume = 1.0
+    sp.arg = 'Hello, custom of room {:s}, there\'s a package for you.'.format(room.roomNo)
+    pub.publish(sp)
