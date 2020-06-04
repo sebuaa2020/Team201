@@ -1643,7 +1643,7 @@
           <wrench>0 0 9.8 0 -0 0</wrench>
         </link>
       </model>
-      <model name='wpb_home'>
+      <!-- <model name='wpb_home'>
         <pose frame=''>4.02 4 0.015 0 -0 0</pose>
         <scale>1 1 1</scale>
         <link name='base_footprint'>
@@ -1652,7 +1652,7 @@
           <acceleration>0 0 1 -4e-06 -5e-06 0</acceleration>
           <wrench>-2e-06 1e-06 20 0 -0 0</wrench>
         </link>
-      </model>
+      </model> -->
       <light name='sun'>
         <pose frame=''>0 0 10 0 -0 0</pose>
       </light>
@@ -11537,7 +11537,7 @@
       </link>
       <pose frame=''>0.008534 0.037118 0 0 -0 0</pose>
     </model>
-    <model name='wpb_home'>
+    <!-- <model name='wpb_home'>
       <link name='base_footprint'>
         <pose frame=''>0 0 0 0 -0 0</pose>
         <inertial>
@@ -11780,6 +11780,6 @@
         <robotNamespace>/</robotNamespace>
       </plugin>
       <pose frame=''>4 4 0 0 -0 0</pose>
-    </model>
+    </model> -->
   </world>
 </sdf>
