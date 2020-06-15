@@ -44,7 +44,7 @@ export default {
     methods: {
         submitForm() {
             this.$refs.login.validate(valid => {
-                if (this.param.username == "admin" && this.param.password=="123123") {
+                if ((this.param.username == "admin" && this.param.password=="123123") | (this.param.username == "user201" && this.param.password=="123123")) {
                     //this.$message.success(this.param.username + this.param.password+"1");
                     this.$message.success('登录成功');
                     localStorage.setItem('ms_username', this.param.username);
